@@ -60,11 +60,13 @@ Configuration variables:
 
   - **id** (**Required**, :ref:`config-id`): The id of the sensor to be used
   - **broadcast_id** (*Optional*, string): The id to be used for this sensor in the broadcast. Defaults to the same as the internal id.
+  - **listen_address** (*Optional*, IPv4 address): Multicast address to listen to.
 
 - **binary_sensors** (*Optional*, list): A list of binary sensor IDs to be broadcast.
 
   - **id** (**Required**, :ref:`config-id`): The id of the binary sensor to be used
   - **broadcast_id** (*Optional*, string): The id to be used for this binary sensor in the broadcast. Defaults to the same as the internal id.
+  - **listen_address** (*Optional*, IPv4 address): Multicast address to listen to.
 
 - **encryption** (*Optional*, string): The encryption key to use when broadcasting. Default is no encryption. This may be
   any string, and will be hashed to form a 256 bit key.
@@ -75,6 +77,7 @@ Configuration variables:
 
   - **name** (**Required**, string): The device name of the provider.
   - **encryption** (*Optional*, string): The provider's encryption key.
+  - **listen_address** (*Optional*, IPv4 address): Multicast address to listen to.
 
 Wherever a provider name is required, this should be the node name configured in the ``esphome:`` block.
 
@@ -287,6 +290,29 @@ the port specified in the ``udp_external`` configuration:
           - lambda: |- 
               ESP_LOGI("main", "d command to binary_sensor_unlock");
 
+The example below shows two devices communicating via multicast:
+
+.. code-block:: yaml
+
+    # Device 1
+    binary_sensor:
+      - platform: gpio
+        pin: D2
+        id: binary_sensor_door
+
+    udp:
+      - id: mc_external
+        address:
+          - 239.0.60.53
+        binary_sensors:
+          - binary_sensor_door
+
+    # Device 2
+    binary_sensor:
+      - platform: udp
+        listen_address: 239.0.60.53
+        id: remote_door_sensor
+        remote_id: mc_external
 
 .. [#f1] As known in 2024.06.
 
