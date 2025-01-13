@@ -56,6 +56,7 @@ Configuration variables:
 - **port** (*Optional*, int): The destination UDP port number to use. Defaults to ``18511``.
 - **addresses** (*Optional*, list of IPv4 addresses): One or more IP addresses to broadcast data to. Defaults to ``255.255.255.255``
   which is the local network broadcast address.
+- **listen_address** (*Optional*, IPv4 address): One or more IP multicast address to listen to. Defaults to no multicast address, just local network broadcast address ``255.255.255.255``.
 - **sensors** (*Optional*, list): A list of sensor IDs to be broadcast. Each entry may be just the sensor id, or may set a different id to be broadcast.
 
   - **id** (**Required**, :ref:`config-id`): The id of the sensor to be used
@@ -75,7 +76,6 @@ Configuration variables:
 
   - **name** (**Required**, string): The device name of the provider.
   - **encryption** (*Optional*, string): The provider's encryption key.
-  - **listen_address** (*Optional*, IPv4 address): Multicast address to listen to.
 
 Wherever a provider name is required, this should be the node name configured in the ``esphome:`` block.
 
@@ -312,8 +312,8 @@ The example below shows two devices communicating via multicast:
         remote_id: mc_external
 
     udp:
-      - provider: device1
-        listen_address: 239.0.60.53
+      listen_addresses:
+        - 239.0.60.53
 
 .. [#f1] As known in 2024.06.
 
