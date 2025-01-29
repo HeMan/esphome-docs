@@ -57,7 +57,7 @@ Configuration variables:
 - **addresses** (*Optional*, list of IPv4 addresses): One or more IP addresses to broadcast data to. Defaults to ``255.255.255.255``
   which is the local network broadcast address.
 - **listen_address** (*Optional*, IPv4 address): Changes to multicast, adding an address to listen to. Defaults to no multicast address, just
-  local network broadcast address ``255.255.255.255``. **NOTE**: Adding a multicast address stops it from listen on unicast address.
+  local network broadcast address ``255.255.255.255``. **NOTE**: Adding a multicast address stops it from listening on the broadcast address.
 - **sensors** (*Optional*, list): A list of sensor IDs to be broadcast. Each entry may be just the sensor id, or may set a different id to be broadcast.
 
   - **id** (**Required**, :ref:`config-id`): The id of the sensor to be used
